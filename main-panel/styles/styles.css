@@ -7,19 +7,45 @@ body {
 }
 
 header {
-    background-color: #FF8C00; /* Dark orange */
-    color: white;
+    background-color: #FF8C00; 
     padding: 1em;
     text-align: center;
-    font-size: 2em;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-header .logo {
-    height: 80px; /* Double the original height of 40px */
+.header-content {
+    background-color: #FFA500; 
+    padding: 0.5em 1em;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.header-content .logo {
+    height: 80px; 
     margin-right: 10px;
+}
+
+.header-content .header-text {
+    color: white;
+    font-size: 2em;
+}
+
+.search-bar {
+    margin: 20px auto;
+    max-width: 800px;
+    text-align: center;
+}
+
+.search-bar input {
+    padding: 10px;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
 }
 
 #link-container {
@@ -29,6 +55,16 @@ header .logo {
     background-color: #0b5383;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-container {
+    margin-top: 20px;
+}
+
+.category-title {
+    font-size: 1.5em;
+    color: #fff;
+    margin-bottom: 10px;
 }
 
 .link-entry {
@@ -52,6 +88,6 @@ header .logo {
 }
 
 .link-description {
-    color: #ccc; /* Lighter gray color */
+    color: #ccc; 
     font-size: 0.9em;
 }
