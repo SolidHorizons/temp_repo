@@ -1,0 +1,2 @@
+# shdevsrvr
+webpanel for shdevsrvr
