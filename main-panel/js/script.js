@@ -27,7 +27,7 @@ function insertLinks(linkList, containerId) {
 
     const container = document.getElementById(containerId);
     container.innerHTML = ''; // Clear existing content
-
+    
     for (const category in categories) {
         const categoryContainer = document.createElement('div');
         categoryContainer.className = 'category-container';
@@ -74,7 +74,12 @@ function filterLinks(event) {
 
 // Handle authentication click
 document.getElementById('auth-button').addEventListener('click', () => {
-    window.location.href = 'login.html';
+    if (pb.authStore.isValid) {
+        pb.authStore.clear();
+        window.location.reload();
+    } else {
+        window.location.href = 'login.html';
+    }
 });
 
 // Initialize the links and search functionality if logged in
@@ -82,20 +87,19 @@ if (pb.authStore.isValid) {
     document.getElementById('auth-button').textContent = 'Logout';
     document.getElementById('nav-username').textContent = pb.authStore.model.username; // Replace 'username' with the actual field containing the username
     document.getElementById('link-container').classList.remove('hidden');
-    document.getElementById('auth-button').onclick = () => {
-        pb.authStore.clear();
-        document.getElementById('auth-button').textContent = 'Login';
-        document.getElementById('nav-username').textContent = '';
-        document.getElementById('link-container').classList.add('hidden');
-        document.getElementById('search-input').disabled = true;
-    };
     document.getElementById('search-input').disabled = false;
+    document.getElementById('add-article-button').classList.remove('hidden');
 
     fetchLinks().then(links => {
         insertLinks(links, 'link-container');
     });
 } else {
     document.getElementById('search-input').disabled = true;
+    document.getElementById('add-article-button').classList.add('hidden');
 }
+
+document.getElementById('add-article-button').addEventListener('click', () => {
+    window.location.href = 'add-article.html';
+});
 
 document.getElementById('search-input').addEventListener('input', filterLinks);

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Article - SH dev panel</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="images/logo.svg" alt="Logo" class="logo">
+            <span class="header-text">SolidHorizons - Add Article</span>
+        </div>
+    </header>
+    <div class="add-article-container">
+        <form id="add-article-form">
+            <h2>Add New Article</h2>
+            <label for="displayname">Display Name:</label>
+            <input type="text" id="displayname" name="displayname" required>
+            <label for="url">URL:</label>
+            <input type="url" id="url" name="url" required>
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+                <option value="General">General</option>
+                <option value="SolidHorizons">SolidHorizons</option>
+                <option value="Websites">Websites</option>
+            </select>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+            <button type="submit">Add Article</button>
+            <div id="success-message" class="success-message"></div>
+        </form>
+    </div>
+
+    <script type="module" src="js/add-article.js"></script>
+</body>
+</html>
