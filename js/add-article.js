@@ -26,3 +26,11 @@ document.getElementById('add-article-form').addEventListener('submit', async (ev
         successMessageDiv.textContent = 'Error adding article. Please try again.';
     }
 });
+
+document.getElementById('analytics-button').addEventListener('click', () => {
+    window.location.href = 'analytics.html';
+});
+
+document.getElementById('home-button').addEventListener('click', () => {
+    window.location.href = 'index.html';
+});

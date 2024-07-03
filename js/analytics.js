@@ -34,6 +34,14 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
     }
 });
 
+document.getElementById('add-article-button').addEventListener('click', () => {
+    window.location.href = 'add-article.html';
+});
+
+document.getElementById('home-button').addEventListener('click', () => {
+    window.location.href = 'index.html';
+});
+
 async function getApiKey() {
     try {
         const record = await pb.collection('api_keys').getFirstListItem('site="hetzner.com"');
@@ -129,4 +137,12 @@ document.getElementById('auth-button').addEventListener('click', () => {
     } else {
         window.location.href = 'login.html'; // Adjust the URL if needed
     }
+});
+
+document.getElementById('add-article-button').addEventListener('click', () => {
+    window.location.href = 'add-article.html';
+});
+
+document.getElementById('analytics-button').addEventListener('click', () => {
+    window.location.href = 'analytics.html';
 });

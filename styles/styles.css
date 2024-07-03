@@ -231,7 +231,7 @@ header {
     margin-top: 1em;
 }
 
-#add-article-button ~ #analytics-button {
+#add-article-button ~ #analytics-button, #home-button{
     margin-left: 10px; /* Space between Add Article and Analytics buttons */
 }
 
