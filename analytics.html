@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - SH dev panel</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="images/logo.svg" alt="Logo" class="logo">
+            <span class="header-text">SolidHorizons - Analytics</span>
+        </div>
+    </header>
+    <nav>
+        <div class="nav-content">
+            <button class="nav-button hidden" id="add-article-button">Add Article</button>
+            <button class="nav-button hidden" id="analytics-button">Analytics</button>
+            <!-- Selection Bar -->
+            <div class="selection-bar hidden" id="selection-bar">
+                <select id="analytics-options">
+                    <option value="hetzner">Hetzner</option>
+                    <!-- Future options for different data sources -->
+                </select>
+            </div>
+            <span class="spacer"></span> <!-- Wrapper element to push other items to the right -->
+            <span class="nav-username" id="nav-username"></span>
+        </div>
+    </nav>
+    <div class="analytics-container" id="analytics-container">
+        <h2>Analytics Dashboard</h2>
+        <div id="login-form-container" class="login-container">
+            <form id="login-form">
+                <h2>Login to View Analytics</h2>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Login</button>
+                <div id="error-message" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    <div id="server-info" class="hidden">
+        <!-- Server information will be dynamically inserted here -->
+        <div id="server-grid"></div>
+    </div>
+    <script type="module" src="js/analytics.js"></script>
+</body>
+</html>

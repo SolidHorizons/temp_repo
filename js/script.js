@@ -89,6 +89,7 @@ if (pb.authStore.isValid) {
     document.getElementById('link-container').classList.remove('hidden');
     document.getElementById('search-input').disabled = false;
     document.getElementById('add-article-button').classList.remove('hidden');
+    document.getElementById('analytics-button').classList.remove('hidden'); // Show the new button
 
     fetchLinks().then(links => {
         insertLinks(links, 'link-container');
@@ -96,10 +97,15 @@ if (pb.authStore.isValid) {
 } else {
     document.getElementById('search-input').disabled = true;
     document.getElementById('add-article-button').classList.add('hidden');
+    document.getElementById('analytics-button').classList.add('hidden'); // Hide the new button
 }
 
 document.getElementById('add-article-button').addEventListener('click', () => {
     window.location.href = 'add-article.html';
+});
+
+document.getElementById('analytics-button').addEventListener('click', () => {
+    window.location.href = 'analytics.html';
 });
 
 document.getElementById('search-input').addEventListener('input', filterLinks);
