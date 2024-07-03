@@ -3,6 +3,37 @@ import PocketBase from 'https://unpkg.com/pocketbase?module';
 const pocketbaseUrl = 'https://pocketbase.shdevsrvr.xyz';
 const pb = new PocketBase(pocketbaseUrl);
 
+document.getElementById('login-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const errorMessageDiv = document.getElementById('error-message');
+
+    errorMessageDiv.textContent = ''; // Clear any previous error message
+
+    try {
+        await pb.collection('users').authWithPassword(username, password);
+        
+        // Hide the entire analytics-container and show the selection bar and server info
+        document.getElementById('analytics-container').classList.add('hidden');
+        document.getElementById('selection-bar').classList.remove('hidden');
+        document.getElementById('server-info').classList.remove('hidden');
+        
+        // Initialize the selection bar
+        createSelectionBar(); 
+        
+        // Fetch and display server info
+        const apiToken = await getApiKey();
+        if (apiToken) {
+            fetchServerInfo(apiToken);
+            setInterval(() => fetchServerInfo(apiToken), 10000); // Refresh every 10 seconds
+        }
+    } catch (error) {
+        errorMessageDiv.textContent = 'Email or username and password combination does not exist.';
+    }
+});
+
 async function getApiKey() {
     try {
         const record = await pb.collection('api_keys').getFirstListItem('site="hetzner.com"');
@@ -70,43 +101,25 @@ function createSelectionBar() {
     selectionBar.classList.remove('hidden');
 
     // Event listener for the selection bar
-    document.getElementById('analytics-options').addEventListener('change', (event) => {
+    document.getElementById('analytics-options').addEventListener('change', async (event) => {
         const selectedOption = event.target.value;
         if (selectedOption === 'hetzner') {
-            // For now, just refetch Hetzner data
-            fetchServerInfo();
+            const apiToken = await getApiKey();
+            if (apiToken) {
+                fetchServerInfo(apiToken);
+            }
         }
     });
 }
 
-async function authenticateAndFetchData(email, password) {
-    try {
-        await pb.collection('users').authWithPassword(email, password);
-        
-        document.getElementById('analytics-container').classList.add('hidden');
-        document.getElementById('selection-bar').classList.remove('hidden');
-        document.getElementById('server-info').classList.remove('hidden');
-        
-        createSelectionBar(); // Ensure the selection bar is created and visible
-
-        const apiToken = await getApiKey();
-        if (apiToken) {
-            fetchServerInfo(apiToken);
-            setInterval(() => fetchServerInfo(apiToken), 10000); // Refresh every 10 seconds
-        }
-    } catch (error) {
-        console.error('Error during authentication:', error);
-        document.getElementById('error-message').textContent = 'Login failed. Please check your credentials.';
-    }
+// Handle user login status
+if (pb.authStore.isValid) {
+    document.getElementById('auth-button').textContent = 'Logout';
+    document.getElementById('nav-username').textContent = pb.authStore.model.username; // Replace 'username' with the actual field containing the username
+    document.getElementById('selection-bar').classList.remove('hidden');
+} else {
+    document.getElementById('selection-bar').classList.add('hidden');
 }
-
-// Handle login form submission
-document.getElementById('login-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    authenticateAndFetchData(email, password);
-});
 
 // Handle authentication click
 document.getElementById('auth-button').addEventListener('click', () => {
@@ -117,12 +130,3 @@ document.getElementById('auth-button').addEventListener('click', () => {
         window.location.href = 'login.html'; // Adjust the URL if needed
     }
 });
-
-// Initialize the navbar functionality if logged in
-if (pb.authStore.isValid) {
-    document.getElementById('auth-button').textContent = 'Logout';
-    document.getElementById('nav-username').textContent = pb.authStore.model.username; // Replace 'username' with the actual field containing the username
-    document.getElementById('selection-bar').classList.remove('hidden');
-} else {
-    document.getElementById('selection-bar').classList.add('hidden');
-}
