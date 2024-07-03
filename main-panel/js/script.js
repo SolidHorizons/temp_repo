@@ -3,13 +3,17 @@ import PocketBase from 'https://unpkg.com/pocketbase?module';
 const pocketbaseUrl = 'https://pocketbase.shdevsrvr.xyz';
 const pb = new PocketBase(pocketbaseUrl);
 
-// Links with descriptions, display strings, and categories
-const links = [
-    { url: 'https://openweb.shdevsrvr.xyz/', description: "SH's private openweb ai", display: 'SH Openweb', category: 'General' },
-    { url: 'https://github.com/Shrimpey304/shdevsrvr/', description: "dev server's github", display: 'SH dev git repository', category: 'General' },
-    { url: 'https://www.stackoverflow.com', description: 'Programming Q&A', display: 'stackoverflow', category: 'Website' },
-    { url: 'https://pocketbase.shdevsrvr.xyz/_/', description: 'Dev database', display: 'Development Database', category: 'General' },
-];
+async function fetchLinks() {
+    try {
+        const records = await pb.collection('articles').getFullList({
+            sort: '-created',
+        });
+        return records;
+    } catch (error) {
+        console.error('Error fetching links:', error);
+        return [];
+    }
+}
 
 // Function to create and insert links
 function insertLinks(linkList, containerId) {
@@ -39,7 +43,7 @@ function insertLinks(linkList, containerId) {
 
             const anchor = document.createElement('a');
             anchor.href = linkObj.url;
-            anchor.textContent = linkObj.display || linkObj.url;
+            anchor.textContent = linkObj.displayname || linkObj.url;
             anchor.target = '_blank';
 
             const description = document.createElement('span');
@@ -58,12 +62,14 @@ function insertLinks(linkList, containerId) {
 // Function to filter links based on search input
 function filterLinks(event) {
     const query = event.target.value.toLowerCase();
-    const filteredLinks = links.filter(link =>
-        link.description.toLowerCase().includes(query) ||
-        link.category.toLowerCase().includes(query) ||
-        link.display.toLowerCase().includes(query)
-    );
-    insertLinks(filteredLinks, 'link-container');
+    fetchLinks().then(links => {
+        const filteredLinks = links.filter(link =>
+            link.description.toLowerCase().includes(query) ||
+            link.category.toLowerCase().includes(query) ||
+            link.displayname.toLowerCase().includes(query)
+        );
+        insertLinks(filteredLinks, 'link-container');
+    });
 }
 
 // Handle authentication click
@@ -84,13 +90,12 @@ if (pb.authStore.isValid) {
         document.getElementById('search-input').disabled = true;
     };
     document.getElementById('search-input').disabled = false;
+
+    fetchLinks().then(links => {
+        insertLinks(links, 'link-container');
+    });
 } else {
     document.getElementById('search-input').disabled = true;
 }
 
 document.getElementById('search-input').addEventListener('input', filterLinks);
-
-// Insert links when the user is logged in
-if (pb.authStore.isValid) {
-    insertLinks(links, 'link-container');
-}
