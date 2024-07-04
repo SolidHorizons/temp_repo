@@ -90,6 +90,7 @@ if (pb.authStore.isValid) {
     document.getElementById('search-input').disabled = false;
     document.getElementById('add-article-button').classList.remove('hidden');
     document.getElementById('analytics-button').classList.remove('hidden'); // Show the new button
+    document.getElementById('API-button').classList.remove('hidden');
 
     fetchLinks().then(links => {
         insertLinks(links, 'link-container');
@@ -106,6 +107,10 @@ document.getElementById('add-article-button').addEventListener('click', () => {
 
 document.getElementById('analytics-button').addEventListener('click', () => {
     window.location.href = 'analytics.html';
+});
+
+document.getElementById('API-button').addEventListener('click', () => {
+    window.location.href = 'apipage.html';
 });
 
 document.getElementById('search-input').addEventListener('input', filterLinks);

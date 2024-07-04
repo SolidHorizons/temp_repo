@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Key Management</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="images/logo.svg" alt="Logo" class="logo">
+            <span class="header-text">API Key Management</span>
+        </div>
+    </header>
+    <nav>
+        <div class="nav-content">
+            <span class="spacer"></span>
+            <span class="nav-username" id="nav-username"></span>
+            <button class="nav-button" id="auth-button">Login</button>
+        </div>
+    </nav>
+    <div class="main-container">
+        <div class="left-container">
+            <div class="key-generation-and-keys-container">
+                <div class="key-generation-container">
+                    <h2>Generate API Key</h2>
+                    <button id="generate-key-button">Generate Key</button>
+                    <div id="generated-key" class="hidden">
+                        <h3>Your API Key:</h3>
+                        <p id="api-key">****************</p>
+                    </div>
+                </div>
+                <div class="api-keys-container">
+                    <h2>Existing API Keys</h2>
+                    <ul id="api-keys-list"></ul>
+                </div>
+            </div>
+            <div class="api-request-container">
+                <h2>Make API Request</h2>
+                <button id="make-request-button">Make Request</button>
+                <div id="api-response" class="hidden">
+                    <h3>API Response:</h3>
+                    <pre id="response-data"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="js/key-management.js"></script>
+</body>
+</html>
