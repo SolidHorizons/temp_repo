@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={openSans.className}>
+      <body className={`${openSans.className} min-h-screen`}>
         <Header />
         {children}
         </body>
