@@ -2,6 +2,7 @@
 
 import Loader from '@/app/components/loader';
 import { useState } from 'react';
+import GitHubEmbed from '@/app/components/githubEmbed';
 
 export default function Page() {
     const [isLoading, setIsLoading] = useState(true);
@@ -12,10 +13,13 @@ export default function Page() {
     //             </div>
     // }
 
-    return <main className='max-w-full p-2 m-4 min-h-72 inset-0 bg-black bg-opacity-25 border-slate-300/15 border rounded-xl'>
-        <label className='text-lg'>Recent GitHub Activity</label>
-        {/* Funny Line */} <hr />
-        <label className='text-lg'>Quick Links</label>
-        {/* Funny Line */} <hr />
+    return <main className='max-w-full p-2 m-4 min-h-72 inset-0 bg-black bg-opacity-25 border-slate-300/15 border rounded-xl flex flex-col flex-wrap'>
+        <label className='text-lg min-w-full'>Recent GitHub Activity</label>
+        {/* Funny Line */} <hr className='min-w-full mb-2'/>
+
+        { /* TODO: Implement code so that we can just pull recent activity from github. Then use a map or whatever.  */}
+        <GitHubEmbed src="" alt="Github Image" width="100" height="100"/>
+        <label className='text-lg min-w-full'>Quick Links</label>
+        {/* Funny Line */} <hr className='min-w-full'/>
     </main>
 }
