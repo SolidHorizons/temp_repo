@@ -1,3 +1,6 @@
+"use client";
+import Email from '@/app/components/emailinput';
+
 export default function Login() {
  return <main className="flex flex-col content-center flex-wrap">
             <form>
@@ -7,21 +10,16 @@ export default function Login() {
                     
                     <div className="flex flex-col flex-wrap">
                         <label className="" htmlFor="email">Email</label>
-                        <input
-                        className="w-max"
-                        id="email"
-                        type="email"
-                        name="email"
-                        placeholder="You@example.com"
-                        required
+                        <Email
                         />
-                        <label className="w-max" htmlFor="password">Password</label>
+                        <label className="w-max mt-2" htmlFor="password">Password</label>
                         <input
-                        className="w-max"
+                        className="border-solid border border-slate-300/15 rounded-md bg-transparent h-10 text-lg p-2 transition duration-200 
+                        focus:bg-white focus:text-black focus-visible:outline-none"
                         id="password"
                         type="password"
                         name="password"
-                        placeholder="Enter your password"
+                        placeholder="Password"
                         required
                         />
                     </div>
