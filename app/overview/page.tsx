@@ -18,7 +18,7 @@ export default function Page() {
         {/* Funny Line */} <hr className='min-w-full mb-2'/>
 
         { /* TODO: Implement code so that we can just pull recent activity from github. Then use a map or whatever.  */}
-        <GitHubEmbed src="" alt="Github Image" width="100" height="100"/>
+        <GitHubEmbed src="https://avatars.githubusercontent.com/u/132166635?v=4" alt="Github Image" width="50" height="50"/>
         <label className='text-lg min-w-full'>Quick Links</label>
         {/* Funny Line */} <hr className='min-w-full'/>
     </main>
