@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function GitHubEmbed(props: any) {
     return <div className="bg-gradient-to-r p-2 from-gray-500 to-gray-600 w-full h-8v rounded-lg">
-        <div className="flex flex-row ">
+        <div className="flex flex-row h-10">
             <Image
             className=''
                 src={props.src}
@@ -11,7 +11,10 @@ export default function GitHubEmbed(props: any) {
                 height={props.height}
                 unoptimized
             />
-            <label>{props.GitHubRepository ? props.GitHubRepository : "Repository Name"}</label>
+            <label className='my-auto'>{props.GitHubRepository ? props.GitHubRepository : "Repository Name"}</label>
+        </div>
+        <div>
+            
         </div>
     </div>
 }
