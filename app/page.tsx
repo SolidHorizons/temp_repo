@@ -1,19 +1,32 @@
 "use client";
-import PocketBase from 'pocketbase';
-import { useState } from 'react';
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { pb } from '@/lib/pocketbase';
+import { useEffect } from 'react';
+import Loader from '@/app/components/loader';
 
 export default function Page() {
+    const router = useRouter();
 
+    const [isLoading, setIsLoading] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isValid, setIsValid] = useState(false);
     const [isTouched, setIsTouched] = useState(false);
     const [hasError, setHasError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
     // Regular expression for basic email validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    useEffect(() => {
+        if (pb.authStore.isValid) {
+            router.replace('/overview');
+        }
+        else {
+            setIsLoading(false);
+        }
+    }, [router]);
 
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         const { name, value } = e.target;
@@ -36,13 +49,20 @@ export default function Page() {
     async function login(event: any) {
         event.preventDefault();
         try {
-            const pb = new PocketBase('https://pocketbase.shdevsrvr.xyz');
+            setIsLoading(true);
 
-            const result = await pb.collection('users').authWithPassword(email, password)
+            await pb.collection('users').authWithPassword(email, password)
 
             if(!pb.authStore.isValid) {
                 setHasError(true);
                 setErrorMessage("Existing login token is invalid please login.");
+                setIsLoading(false);
+            }
+            else{
+                setHasError(false);
+                setErrorMessage('')
+
+                router.push('/overview');
             }
 
         }
@@ -53,8 +73,16 @@ export default function Page() {
             // Ignore stinky errors
             if(error.status == 400) {setErrorMessage("Invalid login credentials.");}
             if(error.status == 404) {setErrorMessage("Something went wrong, Please try again later or contact an administrator.");}
+
+            setIsLoading(false);
         }
 
+    }
+
+    if(isLoading) {
+        return <div className='p-28 mt-24'> 
+        <Loader />
+    </div>
     }
 
     return <main className="flex flex-col content-center flex-wrap">
@@ -86,7 +114,7 @@ export default function Page() {
                         placeholder="**********"
                         required
                     />
-                    { hasError && <label className='text-sm text-red-500 text-center w-52 mx-auto mt-2'>{errorMessage ? errorMessage : "An unkown error has occured during the login process!"}</label> }
+                    { hasError && <label className='text-sm text-red-500 text-center w-52 mx-auto mt-2'>{errorMessage != '' ? errorMessage : "An unkown error has occured during the login process!"}</label> }
                 </div>
                 <button className="border-solid border rounded-xl mx-12 py-4 mt-4 border-slate-300/15">
                     submit
